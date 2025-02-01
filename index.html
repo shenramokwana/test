@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dancing Tulips - Retro Vibes</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #f5e6ff, #dff9fb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Courier New', Courier, monospace;
+      position: relative;
+    }
+
+    .floating-text {
+      position: absolute;
+      font-size: 40px;
+      color: rgba(255, 182, 193, 0.8);
+      font-weight: bold;
+      animation: floatText 5s infinite;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    @keyframes floatText {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-50px) rotate(10deg); }
+      100% { transform: translateY(0px); }
+    }
+
+    .tulip {
+      position: absolute;
+      width: 20px;
+      height: 60px;
+      background: linear-gradient(to bottom, #ff6394, #ff005c);
+      border-radius: 10px 10px 2px 2px;
+      transform-origin: bottom center;
+      animation: dance 2s infinite ease-in-out;
+    }
+
+    .tulip::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -10px;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle, #ff77a9, #ff6394);
+      border-radius: 50%;
+    }
+
+    .stem {
+      position: absolute;
+      width: 4px;
+      height: 60px;
+      background: #27ae60;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .leaf {
+      position: absolute;
+      width: 15px;
+      height: 40px;
+      background: #27ae60;
+      border-radius: 50% 0 50% 50%;
+      transform-origin: left;
+      transform: rotate(20deg);
+    }
+
+    .leaf.left {
+      left: -12px;
+      top: 30px;
+      transform: rotate(-40deg);
+    }
+
+    .leaf.right {
+      left: 5px;
+      top: 40px;
+      transform: rotate(20deg);
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 50px;
+      text-align: center;
+      gap: 20px;
+    }
+
+    .button {
+      background-color: #ff007f;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    /* Retro Tulip Animation */
+    #dancing-container {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+    }
+
+    .tulip-move {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes dance {
+      0%, 100% {
+        transform: rotate(-15deg);
+      }
+      50% {
+        transform: rotate(15deg);
+      }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .question {
+      position: absolute;
+      top: 40%;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #6c5ce7;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    /* Added style to make the button unclickable after pressing Yes */
+    .unclickable {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="dancing-container"></div>
+  <div class="question">Ranouch Metghachech?</div>
+  <div class="button-container">
+    <button class="button" id="yes-button">Yes</button>
+    <button class="button" id="no-button">No</button>
+  </div>
+
+  <script>
+    // Generate 7 floating "TULIP" text elements
+    function createFloatingText() {
+      for (let i = 0; i < 7; i++) {
+        const textElement = document.createElement('div');
+        textElement.className = 'floating-text';
+        textElement.textContent = 'TULIP';
+        textElement.style.top = `${Math.random() * window.innerHeight}px`;
+        textElement.style.left = `${Math.random() * window.innerWidth}px`;
+        textElement.style.animationDelay = `${Math.random() * 5}s`;
+        document.body.appendChild(textElement);
+      }
+    }
+
+    // Generate random tulips
+    function createTulip() {
+      const tulipContainer = document.createElement('div');
+      tulipContainer.style.position = 'absolute';
+      tulipContainer.style.top = `${Math.random() * window.innerHeight}px`;
+      tulipContainer.style.left = `${Math.random() * window.innerWidth}px`;
+
+      const tulip = document.createElement('div');
+      tulip.className = 'tulip tulip-move';
+      
+      const stem = document.createElement('div');
+      stem.className = 'stem';
+      tulip.appendChild(stem);
+
+      const leftLeaf = document.createElement('div');
+      leftLeaf.className = 'leaf left';
+      tulip.appendChild(leftLeaf);
+
+      const rightLeaf = document.createElement('div');
+      rightLeaf.className = 'leaf right';
+      tulip.appendChild(rightLeaf);
+
+      tulipContainer.appendChild(tulip);
+      document.getElementById('dancing-container').appendChild(tulipContainer);
+    }
+
+    createFloatingText();
+
+    for (let i = 0; i < 30; i++) {
+      createTulip();
+    }
+
+    const noButton = document.getElementById('no-button');
+    const yesButton = document.getElementById('yes-button');
+
+    let isYesClicked = false;
+
+noButton.addEventListener('click', () => {
+  window.location.href = 'la.html'; // Redirect to the laughing smile page
+});
+// Function to move Yes button around once clicked
+function startYesButtonMovement() {
+  const yesButton = document.getElementById('yes-button'); // Ensure you have the button with id 'yes-button'
+
+  // Make sure the button is positioned absolutely
+  yesButton.style.position = 'absolute';
+
+  // Move the button to a random position once
+  const maxX = window.innerWidth - yesButton.offsetWidth;
+  const maxY = window.innerHeight - yesButton.offsetHeight;
+
+  // Random position within the specified range
+  yesButton.style.left = `${Math.random() * 200}px`;  // Random x position within 200px
+  yesButton.style.top = `${Math.random() * 50}px`;    // Random y position within 50px
+
+  console.log('Button moved to a random position once');
+}
+
+
+    // Move 'Yes' button evasively within the viewport (still works after Yes click)
+    yesButton.addEventListener('mouseenter', () => {
+      if (!isYesClicked) {
+        startYesButtonMovement()
+        console.log('zz')
+      }
+    });
+
+
+
+    
+  </script>
+</body>
+</html>

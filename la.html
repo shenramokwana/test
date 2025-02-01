@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laughing Smile - Everywhere!</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #f5e6ff, #dff9fb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Courier New', Courier, monospace;
+      position: relative;
+      text-align: center;
+    }
+
+    .floating-text {
+      position: absolute;
+      font-size: 50px;
+      color: rgba(255, 182, 193, 0.8);
+      font-weight: bold;
+      animation: floatText 5s infinite;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    @keyframes floatText {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-50px) rotate(10deg); }
+      100% { transform: translateY(0px); }
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 50px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 50px;
+      gap: 20px;
+    }
+
+    .button {
+      background-color: #ff007f;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="question">Sahhitek akika nhebbek!</div>
+
+  <div class="button-container">
+    <button class="button" id="back-button">Baddelt Rayek?</button>
+  </div>
+
+  <script>
+    // Create floating smile emojis everywhere
+    function createFloatingEmojis() {
+      for (let i = 0; i < 50; i++) { // Number of emojis
+        const emoji = document.createElement('div');
+        emoji.className = 'emoji';
+        emoji.textContent = '😂'; // The laughing emoji
+        emoji.style.top = `${Math.random() * window.innerHeight}px`;
+        emoji.style.left = `${Math.random() * window.innerWidth}px`;
+        emoji.style.animationDelay = `${Math.random() * 3}s`;
+        document.body.appendChild(emoji);
+      }
+    }
+
+    createFloatingEmojis();
+
+    const backButton = document.getElementById('back-button');
+    backButton.addEventListener('click', () => {
+      window.location.href = 'index.html'; // Redirect to the original page
+    });
+  </script>
+</body>
+</html>
